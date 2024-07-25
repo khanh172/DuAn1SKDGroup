@@ -201,7 +201,7 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.08, y: -0.38625666}
+  m_Offset: {x: -0.01, y: -0}
   m_Size: {x: 0.44239637, y: 0.18489292}
   m_Direction: 1
 --- !u!114 &268950118
@@ -216,6 +216,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fad5ba2c303d394b9274eceffc6713f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  warrior: {fileID: 11400000, guid: 090fe645bfeef9d408e7dc1724394d99, type: 2}
 --- !u!212 &268950119
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -277,8 +278,8 @@ Transform:
   m_GameObject: {fileID: 268950115}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.1523, y: -0.6252, z: 0}
-  m_LocalScale: {x: 0.6302, y: 0.6302, z: 0.6302}
+  m_LocalPosition: {x: -5.64, y: -0.56, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}

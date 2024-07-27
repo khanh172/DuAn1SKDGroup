@@ -7,6 +7,14 @@ public class GameManager : MonoBehaviour
     public UnitSpawner unitSpawner;
     private GameObject unitToSpawn;
 
+    public GameObject panelWin;
+    public GameObject panelLose;
+
+    private void Start()
+    {
+        panelWin.SetActive(false);
+        panelLose.SetActive(false);
+    }
     void Update()
     {
         // Kiểm tra nếu đơn vị đang được chọn và người chơi click chuột trái
@@ -38,4 +46,19 @@ public class GameManager : MonoBehaviour
 
         return position2D;
     }
+    public void GameOver(bool isAllyWin)
+    {
+        if (isAllyWin)
+        {
+            panelWin.SetActive(true);
+        }
+        else
+        {
+            panelLose.SetActive(true);
+        }
+
+        // Tạm ngưng game
+        Time.timeScale = 0;
+    }
+
 }

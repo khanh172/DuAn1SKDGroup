@@ -22,7 +22,7 @@ public class AllyAttackAI : MonoBehaviour
 
         foreach (Collider2D hit in hits)
         {
-            if (hit.CompareTag("Enemy")) // Tìm các kẻ thù
+            if (hit.CompareTag("Enemy") || hit.CompareTag("EnemyCastle")) // Tìm các kẻ thù hoặc thành kẻ thù
             {
                 float distance = Vector2.Distance(transform.position, hit.transform.position);
                 if (distance < closestDistance)
@@ -40,6 +40,7 @@ public class AllyAttackAI : MonoBehaviour
             Debug.LogWarning("No target found within range.");
         }
     }
+
 
     void MoveAndAttack()
     {

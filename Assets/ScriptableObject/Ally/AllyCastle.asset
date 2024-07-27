@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: AllyCastle
   m_EditorClassIdentifier: 
   cannonDamage: 500
-  health: 5000
+  health: 300

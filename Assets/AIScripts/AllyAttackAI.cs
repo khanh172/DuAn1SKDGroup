@@ -106,7 +106,7 @@ public class AllyAttackAI : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         // Ngăn chặn việc đẩy các GameObject khác khi va chạm
-        if (collision.gameObject.CompareTag("Enemy"))
+        if (collision.gameObject.CompareTag("Enemy") || collision.gameObject.CompareTag("EnemyCastle"))
         {
             Rigidbody2D rb = GetComponent<Rigidbody2D>();
             if (rb != null)

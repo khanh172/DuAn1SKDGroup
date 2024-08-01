@@ -2,7 +2,7 @@
 
 public class EnemyAttackAI : MonoBehaviour
 {
-    public UnitEnemyStats stats; // Sử dụng SoldierStats để quản lý các thông số của kẻ thù
+    public UnitEnemyStats stats; // Sử dụng UnitEnemyStats để quản lý các thông số của kẻ thù
     public float searchRange; // Khoảng cách để tìm kiếm kẻ thù
 
     private Transform target;
@@ -100,41 +100,10 @@ public class EnemyAttackAI : MonoBehaviour
 
     void StopMoving()
     {
-        // Giữ nguyên vị trí, ngăn chặn việc di chuyển
-        transform.Translate(Vector2.zero);
-        //GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-        //GetComponent<Rigidbody2D>().angularVelocity = 0f;
+        
     }
-    //private void OnCollisionEnter2D(Collision2D collision)
-    //{
-    //    if (collision.gameObject.CompareTag("AllyCastle") || collision.gameObject.CompareTag("EnemyCastle"))
-    //    {
-    //        // Dừng di chuyển và bắt đầu tấn công
-    //        StopMoving();
-    //        target = collision.transform;
+   
+    
 
-    //        var castle = collision.gameObject.GetComponent<IDamageable>();
-    //        if (castle != null)
-    //        {
-    //            castle.TakeDamage(stats.damage);
-    //        }
-    //    }
-    //}
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        // Ngăn chặn việc đẩy các GameObject khác khi va chạm
-        if (collision.gameObject.CompareTag("Ally") || collision.gameObject.CompareTag("AllyCastle"))
-        {
-            Rigidbody2D rb = GetComponent<Rigidbody2D>();
-            if (rb != null)
-            {
-                rb.velocity = Vector2.zero;
-            }
-            else
-            {
-                Debug.LogWarning("Rigidbody2D component not found on the object.");
-            }
-        }
-    }
+    
 }

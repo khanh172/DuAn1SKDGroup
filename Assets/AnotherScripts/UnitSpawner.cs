@@ -17,7 +17,7 @@ public class UnitSpawner : MonoBehaviour
         }
     }
 
-    private bool IsPositionInSpawnArea(Vector2 position)
+    public bool IsPositionInSpawnArea(Vector2 position)
     {
         // Kiểm tra xem vị trí có nằm trong khu vực cho phép không
         return position.x >= spawnArea.xMin && position.x <= spawnArea.xMax && position.y >= spawnArea.yMin && position.y <= spawnArea.yMax;

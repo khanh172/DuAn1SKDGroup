@@ -100,23 +100,8 @@ public class AllyAttackAI : MonoBehaviour
     void StopMoving()
     {
         // Giữ nguyên vị trí, ngăn chặn việc di chuyển
-        transform.Translate(Vector2.zero);
+       
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        // Ngăn chặn việc đẩy các GameObject khác khi va chạm
-        if (collision.gameObject.CompareTag("Enemy") || collision.gameObject.CompareTag("EnemyCastle"))
-        {
-            Rigidbody2D rb = GetComponent<Rigidbody2D>();
-            if (rb != null)
-            {
-                rb.velocity = Vector2.zero;
-            }
-            else
-            {
-                Debug.LogWarning("Rigidbody2D component not found on the object.");
-            }
-        }
-    }
+   
 }

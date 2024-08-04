@@ -1,11 +1,13 @@
 using UnityEngine;
-
+using UnityEngine.UI;
 public class AllyCastle : MonoBehaviour, IDamageable
 {
     public CastleStats castleStats;
     public GameObject cannonBallPrefab;
     public float cannonRange;
     private GameManager gameManager;
+
+    public Slider healthBarSlider;
 
     private float currentHealth;
     private bool isCannonMode = false;
@@ -14,6 +16,9 @@ public class AllyCastle : MonoBehaviour, IDamageable
     {
         currentHealth = castleStats.health;
         gameManager = FindObjectOfType<GameManager>();
+
+        healthBarSlider.maxValue = castleStats.health;
+        healthBarSlider.value = currentHealth;
     }
 
     void Update()
@@ -37,6 +42,7 @@ public class AllyCastle : MonoBehaviour, IDamageable
     public void TakeDamage(float damage)
     {
         currentHealth -= damage;
+        healthBarSlider.value = currentHealth;
         if (currentHealth <= 0)
         {
             Die();

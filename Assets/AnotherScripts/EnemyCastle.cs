@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class EnemyCastle : MonoBehaviour, IDamageable
 {
@@ -9,6 +10,8 @@ public class EnemyCastle : MonoBehaviour, IDamageable
     public float spawnIntervalMax = 5f;
     private GameManager gameManager;
 
+    public Slider hbSlider;
+
     private float currentHealth;
 
     void Start()
@@ -16,11 +19,15 @@ public class EnemyCastle : MonoBehaviour, IDamageable
         currentHealth = castleStats.health;
         gameManager = FindObjectOfType<GameManager>();
         StartCoroutine(SpawnEnemies());
+
+        hbSlider.maxValue = castleStats.health;
+        hbSlider.value = currentHealth;
     }
 
     public void TakeDamage(float damage)
     {   
         currentHealth -= damage;
+        hbSlider.value = currentHealth;
         if (currentHealth <= 0)
         {
             Die();

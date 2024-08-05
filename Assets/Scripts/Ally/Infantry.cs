@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -38,4 +38,17 @@ public class Infantry : MonoBehaviour, IDamageable
     {
         return currentHealth <= 0;
     }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        // Kiểm tra nếu đối tượng va chạm là thành và khác phe
+        if (collision.gameObject.CompareTag("EnemyCastle"))
+        {
+            var castle = collision.gameObject.GetComponent<IDamageable>();
+            if (castle != null)
+            {
+                castle.TakeDamage(infantryStats.damage); // hoặc archerStats.damage nếu là Archer
+            }
+        }
+    }
+
 }

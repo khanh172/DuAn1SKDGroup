@@ -22,7 +22,7 @@ public class EnemyAttackAI : MonoBehaviour
 
         foreach (Collider2D hit in hits)
         {
-            if (hit.CompareTag("Ally")) // Tìm các đồng minh (đối tượng có tag "Ally")
+            if (hit.CompareTag("Ally") || hit.CompareTag("AllyCastle")) // Tìm các đồng minh hoặc thành đồng minh
             {
                 float distance = Vector2.Distance(transform.position, hit.transform.position);
                 if (distance < closestDistance)
@@ -40,6 +40,7 @@ public class EnemyAttackAI : MonoBehaviour
             Debug.LogWarning("No target found within range.");
         }
     }
+
 
     void MoveAndAttack()
     {
@@ -100,23 +101,40 @@ public class EnemyAttackAI : MonoBehaviour
     void StopMoving()
     {
         // Giữ nguyên vị trí, ngăn chặn việc di chuyển
-        transform.Translate(Vector2.zero);
+        //transform.Translate(Vector2.zero);
+        GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        GetComponent<Rigidbody2D>().angularVelocity = 0f;
     }
-
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        // Ngăn chặn việc đẩy các GameObject khác khi va chạm
-        if (collision.gameObject.CompareTag("Ally"))
+        if (collision.gameObject.CompareTag("AllyCastle") || collision.gameObject.CompareTag("EnemyCastle"))
         {
-            Rigidbody2D rb = GetComponent<Rigidbody2D>();
-            if (rb != null)
+            // Dừng di chuyển và bắt đầu tấn công
+            StopMoving();
+            target = collision.transform;
+
+            var castle = collision.gameObject.GetComponent<IDamageable>();
+            if (castle != null)
             {
-                rb.velocity = Vector2.zero;
-            }
-            else
-            {
-                Debug.LogWarning("Rigidbody2D component not found on the object.");
+                castle.TakeDamage(stats.damage);
             }
         }
     }
+
+    //private void OnCollisionEnter2D(Collision2D collision)
+    //{
+    //    // Ngăn chặn việc đẩy các GameObject khác khi va chạm
+    //    if (collision.gameObject.CompareTag("Ally") || collision.gameObject.CompareTag("AllyCastle"))
+    //    {
+    //        Rigidbody2D rb = GetComponent<Rigidbody2D>();
+    //        if (rb != null)
+    //        {
+    //            rb.velocity = Vector2.zero;
+    //        }
+    //        else
+    //        {
+    //            Debug.LogWarning("Rigidbody2D component not found on the object.");
+    //        }
+    //    }
+    //}
 }

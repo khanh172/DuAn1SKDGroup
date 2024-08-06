@@ -6,10 +6,13 @@ public class Soldier : MonoBehaviour, IDamageable
 {
     public SoldierStats soldierStats;
     private float currentHealth;
+    private Animator animator;
+    private bool isDead = false;
 
     void Start()
     {
         currentHealth = soldierStats.health;
+        animator = GetComponent<Animator>();
     }
 
     void Update()
@@ -21,7 +24,7 @@ public class Soldier : MonoBehaviour, IDamageable
     public void TakeDamage(float damage)
     {
         currentHealth -= damage;
-        if (currentHealth <= 0)
+        if (currentHealth <= 0 && !isDead)
         {
             Die();
         }
@@ -30,13 +33,18 @@ public class Soldier : MonoBehaviour, IDamageable
     // Method to handle the soldier's death
     public void Die()
     {
-        // Add logic for what happens when the soldier dies
+        isDead = true;
+        animator.SetTrigger("Die");
+        StartCoroutine(DestroyAfterAnimation());
+    }
+    private IEnumerator DestroyAfterAnimation()
+    {
+        yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
         Destroy(gameObject);
     }
-
     public bool IsDead()
     {
-        return currentHealth <= 0;
+        return isDead;
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {

@@ -25,7 +25,7 @@ public class EnemyCastle : MonoBehaviour, IDamageable
     }
 
     public void TakeDamage(float damage)
-    {   
+    {       
         currentHealth -= damage;
         hbSlider.value = currentHealth;
         if (currentHealth <= 0)
@@ -40,6 +40,10 @@ public class EnemyCastle : MonoBehaviour, IDamageable
         Destroy(gameObject);
     }
 
+    public bool IsDead()
+    {
+        return currentHealth <= 0;
+    }
     private IEnumerator SpawnEnemies()
     {
         while (true)

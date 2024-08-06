@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+
 public class AllyCastle : MonoBehaviour, IDamageable
 {
     public CastleStats castleStats;
@@ -53,6 +54,11 @@ public class AllyCastle : MonoBehaviour, IDamageable
     {
         gameManager.GameOver(false);
         Destroy(gameObject);
+    }
+
+    public bool IsDead()
+    {
+        return currentHealth <= 0;
     }
 
     private void FireCannon(Vector2 targetPosition)

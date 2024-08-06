@@ -8,6 +8,12 @@ public class EnemyAttackAI : MonoBehaviour
     private Transform target;
     private float nextAttackTime = 0f;
 
+    private Animator animator;
+
+    void Start()
+    {
+        animator = GetComponent<Animator>(); // Lấy Animator component
+    }
     void Update()
     {
         FindTarget(); // Tìm kiếm mục tiêu trước
@@ -68,6 +74,7 @@ public class EnemyAttackAI : MonoBehaviour
                     var damageable = target.GetComponent<IDamageable>();
                     if (damageable != null)
                     {
+                        animator.SetTrigger("Attack");
                         damageable.TakeDamage(stats.damage);
                     }
                     else
@@ -90,17 +97,19 @@ public class EnemyAttackAI : MonoBehaviour
     {
         // Di chuyển về bên trái với tốc độ từ SoldierStats
         transform.Translate(Vector2.left * stats.moveSpeed * Time.deltaTime);
+        animator.SetFloat("Move", stats.moveSpeed);
     }
 
     void MoveTowards(Vector2 position)
     {
         Vector2 direction = (position - (Vector2)transform.position).normalized;
         transform.Translate(direction * stats.moveSpeed * Time.deltaTime);
+        animator.SetFloat("Move", stats.moveSpeed);
     }
 
     void StopMoving()
     {
-        
+        animator.SetFloat("Move", 0);
     }
    
     

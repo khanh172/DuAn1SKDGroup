@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
     private int gold = 0;
 
     private float infantryCooldown = 2.0f; // Cooldown cho Infantry
-    private float archerCooldown = 4.0f;   // Cooldown cho Archer
+    private float archerCooldown = 3.0f;   // Cooldown cho Archer
     private float lastInfantrySpawnTime;
     private float lastArcherSpawnTime;
 
@@ -37,7 +37,7 @@ public class GameManager : MonoBehaviour
         {
             spawnPosition = GetSpawnPosition();
 
-            if (CanSpawnUnitWithCooldown() && IsPositionInSpawnArea(spawnPosition))
+            if (CanSpawnUnitWithCooldown() /*&& IsPositionInSpawnArea(spawnPosition)*/)
             {
                 unitSpawner.SpawnUnit(unitToSpawn, spawnPosition);
                 gold -= GetUnitCost();
@@ -93,7 +93,7 @@ public class GameManager : MonoBehaviour
     {
         if (unitToSpawn == infantryPrefab)
         {
-            return 10;
+            return 15;
         }
         else if (unitToSpawn == archerPrefab)
         {
@@ -104,9 +104,22 @@ public class GameManager : MonoBehaviour
 
     private Vector2 GetSpawnPosition()
     {
-        Vector3 position3D = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector2 position2D = new Vector2(position3D.x, position3D.y);
-        return position2D;
+        //Vector3 position3D = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        //Vector2 position2D = new Vector2(position3D.x, position3D.y);
+        //return position2D;
+
+        Vector3 mousePos = Input.mousePosition;
+        mousePos.z = -Camera.main.transform.position.z;
+        Vector3 worldPos = Camera.main.ScreenToWorldPoint(mousePos);
+
+        float clampedX = Mathf.Clamp(worldPos.x, unitSpawner.spawnArea.xMin, unitSpawner.spawnArea.xMax);
+        float clampedY = Mathf.Clamp(worldPos.y, unitSpawner.spawnArea.yMin, unitSpawner.spawnArea.yMax);
+
+        return new Vector2(clampedX, clampedY);
+
+
+
+
     }
 
     private bool IsPositionInSpawnArea(Vector2 position)
@@ -133,7 +146,7 @@ public class GameManager : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(1f);
-            gold += 200;
+            gold += 5;
         }
     }
 }

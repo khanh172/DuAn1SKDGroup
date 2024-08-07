@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Soldier
   m_EditorClassIdentifier: 
   attackRange: 1.2
-  damage: 200
+  damage: 150
   moveSpeed: 2
-  attackSpeed: 2
+  attackSpeed: 1.75
   health: 800
   soldierName: Soldier

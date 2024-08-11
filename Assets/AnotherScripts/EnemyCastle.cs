@@ -8,10 +8,9 @@ public class EnemyCastle : MonoBehaviour, IDamageable
     public GameObject[] enemyPrefabs;
     public float spawnIntervalMin = 1f;
     public float spawnIntervalMax = 5f;
-    private GameManager gameManager;
-
     public Slider hbSlider;
 
+    private GameManager gameManager;
     private float currentHealth;
 
     void Start()
@@ -33,7 +32,6 @@ public class EnemyCastle : MonoBehaviour, IDamageable
             Die();
         }
     }
-
     public void Die()
     {
         gameManager.GameOver(true);

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public GameObject infantryPrefab;
@@ -24,6 +25,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        Time.timeScale = 1.0f;
         StartCoroutine(IncrementGold());
         panelWin.SetActive(false);
         panelLose.SetActive(false);
@@ -139,6 +141,41 @@ public class GameManager : MonoBehaviour
         }
 
         Time.timeScale = 0;
+    }
+    public void NextLevel()
+    {
+        // Lấy tên của Scene hiện tại
+        string currentSceneName = SceneManager.GetActiveScene().name;
+
+        // Kiểm tra và chuyển đến level tiếp theo
+        if (currentSceneName == "Level1")
+        {
+            SceneManager.LoadScene("Level2");   
+        }
+        else if (currentSceneName == "Level2")
+        {
+            SceneManager.LoadScene("Level3");
+        }
+        // Nếu bạn có thêm các level khác, bạn có thể tiếp tục thêm điều kiện vào đây
+    }
+    public void GoToMainMenu()
+    {
+        // Đặt Time.timeScale về 1 để đảm bảo Menu chính hoạt động bình thường
+        Time.timeScale = 1.0f;
+
+        // Chuyển sang Scene Menu
+        SceneManager.LoadScene("Menu");
+    }
+    public void PlayAgain()
+    {
+        // Đặt Time.timeScale về 1 để đảm bảo game chạy bình thường khi chơi lại
+        Time.timeScale = 1.0f;
+
+        // Lấy tên của Scene hiện tại
+        string currentSceneName = SceneManager.GetActiveScene().name;
+
+        // Tải lại Scene hiện tại để chơi lại
+        SceneManager.LoadScene(currentSceneName);
     }
 
     private IEnumerator IncrementGold()

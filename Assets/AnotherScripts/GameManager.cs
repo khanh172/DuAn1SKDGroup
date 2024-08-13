@@ -6,35 +6,70 @@ public class GameManager : MonoBehaviour
 {
     public GameObject infantryPrefab;
     public GameObject archerPrefab;
+    public GameObject magePrefab;
+    public GameObject tankerPrefab;
     public UnitSpawner unitSpawner;
     private GameObject unitToSpawn;
     public Text goldText;
 
     public GameObject panelWin;
     public GameObject panelLose;
+    public GameObject settingPanel;
+
+    public Button infantryButton;
+    public Button archerButton;
+    public Button mageButton;
+    public Button tankerButton;
+    
+    public Button doneButton;
+    public Button quitButton;
+
+
+    public Image infantryImage;
+    public Image archerImage;
+    public Image mageImage;
+    public Image tankerImage;
+
 
     private bool isUnitSelected = false;
     private Vector2 spawnPosition;
 
     private int gold = 0;
 
-    private float infantryCooldown = 2.0f; // Cooldown cho Infantry
-    private float archerCooldown = 3.0f;   // Cooldown cho Archer
+    private float infantryCooldown = 4.0f; // Cooldown cho Infantry
+    private float archerCooldown = 6.0f;   // Cooldown cho Archer
+    private float mageCooldown = 8.0f;
+    private float tankerCooldown = 9.0f;
     private float lastInfantrySpawnTime;
     private float lastArcherSpawnTime;
+    private float lastMageSpawnTime;
+    private float lastTankerSpawnTime;
 
     private void Start()
     {
+        infantryImage = infantryButton.GetComponent<Image>();
+        archerImage = archerButton.GetComponent<Image>();
+        mageImage = mageButton.GetComponent<Image>();
+        tankerImage = tankerButton.GetComponent<Image>();
+
         Time.timeScale = 1.0f;
         StartCoroutine(IncrementGold());
         panelWin.SetActive(false);
         panelLose.SetActive(false);
+
+        
+        doneButton.onClick.AddListener(DoneSetting);    
+        quitButton.onClick.AddListener(GoToMainMenu);
     }
 
     void Update()
     {
-        goldText.text = "Vàng: " + gold.ToString();
+        goldText.text = "Gold: " + gold.ToString();
 
+        UpdateButtonCooldown(infantryButton, infantryImage, lastInfantrySpawnTime, infantryCooldown);
+        UpdateButtonCooldown(archerButton, archerImage, lastArcherSpawnTime, archerCooldown);
+        UpdateButtonCooldown(mageButton, mageImage, lastMageSpawnTime, mageCooldown);
+        UpdateButtonCooldown(tankerButton, tankerImage, lastTankerSpawnTime, tankerCooldown);
         if (isUnitSelected && Input.GetMouseButtonDown(0))
         {
             spawnPosition = GetSpawnPosition();
@@ -58,7 +93,17 @@ public class GameManager : MonoBehaviour
         unitToSpawn = infantryPrefab;
         isUnitSelected = true;
     }
+    public void SelectTanker()
+    {
+        unitToSpawn = tankerPrefab;
+        isUnitSelected = true;
+    }
 
+    public void SelectMage()
+    {
+        unitToSpawn = magePrefab;
+        isUnitSelected = true;
+    }
     public void SelectArcher()
     {
         unitToSpawn = archerPrefab;
@@ -88,6 +133,22 @@ public class GameManager : MonoBehaviour
                 return true;
             }
         }
+        else if (unitToSpawn == magePrefab)
+        {
+            if (Time.time >= lastMageSpawnTime + mageCooldown && CanSpawnUnit())
+            {
+                lastMageSpawnTime = Time.time;
+                return true;
+            }
+        }
+        else if (unitToSpawn == tankerPrefab)
+        {
+            if (Time.time >= lastTankerSpawnTime + tankerCooldown && CanSpawnUnit())
+            {
+                lastTankerSpawnTime = Time.time;
+                return true;
+            }
+        }
         return false;
     }
 
@@ -100,6 +161,14 @@ public class GameManager : MonoBehaviour
         else if (unitToSpawn == archerPrefab)
         {
             return 20;
+        }
+        else if(unitToSpawn == magePrefab)
+        {
+            return 25;
+        }
+        else if(unitToSpawn == tankerPrefab)
+        {
+            return 12;
         }
         return 0;
     }
@@ -183,7 +252,45 @@ public class GameManager : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(1f);
-            gold += 5;
+            gold += 3;
         }
     }
+    private void UpdateButtonCooldown(Button button, Image buttonImage, float lastSpawnTime, float cooldown)
+    {
+        float timeSinceLastSpawn = Time.time - lastSpawnTime;
+
+        if (timeSinceLastSpawn >= cooldown)
+        {
+            button.interactable = true;
+            buttonImage.color = Color.white; // Trở lại màu trắng khi có thể bấm
+        }
+        else
+        {
+            button.interactable = false;
+            buttonImage.color = Color.gray; // Đổi sang màu xám khi đang cooldown
+        }
+    }
+    public void ToggleSettingPanel()
+    {
+        if (settingPanel != null)
+        {
+            bool isActive = settingPanel.activeSelf;
+            settingPanel.SetActive(!isActive);
+
+            if (isActive)
+            {
+                Time.timeScale = 1.0f; // Tiếp tục trò chơi khi đóng bảng cài đặt
+            }
+            else
+            {
+                Time.timeScale = 0; // Dừng trò chơi khi mở bảng cài đặt
+            }
+        }
+    }
+
+    public void DoneSetting()
+    {
+        ToggleSettingPanel(); // Tắt bảng cài đặt và tiếp tục trò chơi
+    }
+
 }

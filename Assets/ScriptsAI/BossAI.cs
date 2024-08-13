@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BossAI : MonoBehaviour, IDamageable
 {
@@ -10,6 +11,9 @@ public class BossAI : MonoBehaviour, IDamageable
     private bool isMoving = false;
     private bool isDead = false;
     private float nextAttackTime = 0f;
+   
+
+    public Slider healthSlider; // Thêm thanh máu
 
     private float attackDuration = 1f; // Điều chỉnh giá trị này cho phù hợp với độ dài animation
     private float currentAttackTime = 0f;
@@ -21,12 +25,15 @@ public class BossAI : MonoBehaviour, IDamageable
         animator = GetComponent<Animator>();
         currentHealth = bossStats.health;
         StartCoroutine(MoveRoutine());
+
+        healthSlider.maxValue = bossStats.health;
+        healthSlider.value = currentHealth;
     }
 
     void Update()
     {
         if (isDead) return;
-
+        
         FindTarget();
         AttackTarget();
     }
@@ -168,6 +175,7 @@ public class BossAI : MonoBehaviour, IDamageable
         if (isDead) return;
 
         currentHealth -= damage;
+        healthSlider.value = currentHealth;
         if (currentHealth <= 0)
         {
             Die();
@@ -205,4 +213,5 @@ public class BossAI : MonoBehaviour, IDamageable
     {
         return isDead;
     }
+   
 }

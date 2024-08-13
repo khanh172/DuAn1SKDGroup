@@ -31,4 +31,19 @@ public class SettingManagement : MonoBehaviour
     {
         SceneManager.LoadScene("Lobby");
     }
+    public void ShopNLobby()
+    {
+        if (SceneManager.GetActiveScene().name == "Lobby")
+        {
+            SceneManager.LoadScene("ShopScene");
+        }
+        if (SceneManager.GetActiveScene().name == "ShopScene")
+        {
+            SceneManager.LoadScene("Lobby");
+        }
+    }
+    public void Logout()
+    {
+        SceneManager.LoadScene("Menu");
+    }
 }

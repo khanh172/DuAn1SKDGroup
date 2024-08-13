@@ -2,22 +2,21 @@
 
 public class EnemyAttackAI : MonoBehaviour
 {
-    public UnitEnemyStats stats; // Sử dụng UnitEnemyStats để quản lý các thông số của kẻ thù
-    public float searchRange; // Khoảng cách để tìm kiếm kẻ thù
-
+    public UnitEnemyStats stats;
+    public float searchRange;
     private Transform target;
     private float nextAttackTime = 0f;
-
     private Animator animator;
 
     void Start()
     {
-        animator = GetComponent<Animator>(); // Lấy Animator component
+        animator = GetComponent<Animator>();
     }
+
     void Update()
     {
-        FindTarget(); // Tìm kiếm mục tiêu trước
-        MoveAndAttack(); // Di chuyển và tấn công
+        FindTarget();
+        MoveAndAttack();
     }
 
     void FindTarget()
@@ -28,7 +27,7 @@ public class EnemyAttackAI : MonoBehaviour
 
         foreach (Collider2D hit in hits)
         {
-            if (hit.CompareTag("Ally") || hit.CompareTag("AllyCastle")) // Tìm các đồng minh hoặc thành đồng minh
+            if (hit.CompareTag("Ally") || hit.CompareTag("AllyCastle"))
             {
                 float distance = Vector2.Distance(transform.position, hit.transform.position);
                 if (distance < closestDistance)
@@ -38,48 +37,28 @@ public class EnemyAttackAI : MonoBehaviour
                 }
             }
         }
-
         target = closestTarget;
-
-        if (target == null)
-        {
-            Debug.LogWarning("No target found within range.");
-        }
     }
-
 
     void MoveAndAttack()
     {
-        if (stats == null)
-        {
-            Debug.LogError("Enemy is not assigned!");
-            return;
-        }
-
         if (target != null)
         {
             float distanceToTarget = Vector2.Distance(transform.position, target.position);
             if (distanceToTarget > stats.attackRange)
             {
-                // Di chuyển về phía mục tiêu
                 MoveTowards(target.position);
             }
             else
             {
-                // Dừng lại và tấn công mục tiêu nếu trong tầm đánh
                 StopMoving();
                 if (Time.time >= nextAttackTime)
                 {
-                    // Tấn công mục tiêu với sát thương từ SoldierStats
+                    animator.SetTrigger("Attack");
                     var damageable = target.GetComponent<IDamageable>();
                     if (damageable != null)
                     {
-                        animator.SetTrigger("Attack");
                         damageable.TakeDamage(stats.damage);
-                    }
-                    else
-                    {
-                        Debug.LogWarning("Target does not implement IDamageable.");
                     }
                     nextAttackTime = Time.time + 1f / stats.attackSpeed;
                 }
@@ -87,15 +66,12 @@ public class EnemyAttackAI : MonoBehaviour
         }
         else
         {
-            // Nếu không có mục tiêu, tiếp tục di chuyển về bên trái
             MoveLeft();
         }
     }
 
-
     void MoveLeft()
     {
-        // Di chuyển về bên trái với tốc độ từ SoldierStats
         transform.Translate(Vector2.left * stats.moveSpeed * Time.deltaTime);
         animator.SetFloat("Move", stats.moveSpeed);
     }
@@ -111,8 +87,4 @@ public class EnemyAttackAI : MonoBehaviour
     {
         animator.SetFloat("Move", 0);
     }
-   
-    
-
-    
 }

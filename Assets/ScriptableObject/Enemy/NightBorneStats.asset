@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8099919fcdcc5f947ac240a68f5f2ed6, type: 3}
   m_Name: NightBorneStats
   m_EditorClassIdentifier: 
-  attackRange: 2
-  damage: 5000
+  attackRange: 1
+  damage: 1000
   moveSpeed: 0.5
   attackSpeed: 1
-  health: 100000
+  health: 20000
   bossName: NightBorne

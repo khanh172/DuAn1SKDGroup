@@ -12,5 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8da9e85d20d96a4f9a169abad7b42f3, type: 3}
   m_Name: AllyCastle
   m_EditorClassIdentifier: 
-  cannonDamage: 500
-  health: 8000
+  health: 10000

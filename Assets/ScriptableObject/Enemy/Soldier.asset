@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ec9d25492a333d42b42f3b9c7d6d8bc, type: 3}
   m_Name: Soldier
   m_EditorClassIdentifier: 
-  attackRange: 1.2
-  damage: 150
-  moveSpeed: 2
-  attackSpeed: 1.75
+  attackRange: 1
+  damage: 50
+  moveSpeed: 1
+  attackSpeed: 1
   health: 1500
   soldierName: Soldier

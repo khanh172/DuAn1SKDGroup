@@ -3385,7 +3385,7 @@ MonoBehaviour:
   castleStats: {fileID: 11400000, guid: 324a65818b0e1f54485c6aacbf68d8d2, type: 2}
   enemyPrefabs:
   - {fileID: 9124914222468256402, guid: 362892b4876a34f44bfd9d4975249c26, type: 3}
-  spawnIntervalMin: 5
+  spawnIntervalMin: 8
   spawnIntervalMax: 20
   hbSlider: {fileID: 1232235011}
   enemySecondPrefabs:
